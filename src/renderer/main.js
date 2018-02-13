@@ -6,7 +6,7 @@ import App from './App'
 import router from './router'
 import { store } from './store'
 import player from './player'
-Vue.component('player',player)
+Vue.component('player', player)
 Vue.use(Vuetify, {
   theme: {
     primary: '#e53935',
