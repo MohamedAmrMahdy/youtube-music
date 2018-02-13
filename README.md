@@ -1,1 +1,26 @@
-# YouTube Music (Work in Progress)
+[![test](https://i.imgur.com/n8hFjrW.png)](https://#)
+# Youtube Music
+
+Web Application give you the experince for using youtube for listening to music
+>We are still working on it no release yet
+
+# Features :
+
+  - Less bandwidth usage
+  - Easy to use
+  - Fast
+  -
+
+# Planned Features :
+
+  - Search for Videos
+  - Queue
+  - Search for Playlist
+  - Bookmark
+  - Add video using link
+  - Add playlist using link
+
+License
+-
+MIT
+
