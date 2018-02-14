@@ -36,7 +36,7 @@
                       </div>
                     </v-card-title>
                     <v-card-actions>
-                      <v-btn small outline round color="blue" @click.native="sendvid(item.id,item.title,item.author)"><v-icon>add_box</v-icon>Play</v-btn>
+                      <v-btn small outline round color="blue" @click.native="sendvid(item.id,item.title,item.author,item)"><v-icon>add_box</v-icon>Play</v-btn>
                       <v-btn small outline round flat color="cyan"><v-icon>bookmark</v-icon>Save for Later</v-btn>
                       <v-spacer></v-spacer>
                       <v-btn icon color="blue" @click.native="item.showDes = !item.showDes">
@@ -69,12 +69,13 @@
       }
     },
     methods: {
-      sendvid (id,title,author){
+      sendvid (id,title,author,item){
         this.$eventHub.$emit('playvid',id,title,author)
+        console.log(item)
       },
       searchNadd (keyword) {
         this.resultArray=[]
-        axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&regionCode=eg&type=video&key=AIzaSyAbWy9rzBUnNsuu8XU_avOLck3h0a7AcZE&q='${keyword}`).
+        axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&regionCode=eg&type=video&key=AIzaSyAbWy9rzBUnNsuu8XU_avOLck3h0a7AcZE&q='${keyword}`).
         then( (response) => {
           console.log(response)
           let arr = []

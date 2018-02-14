@@ -6,7 +6,7 @@
         style="display:block"
         ></youtube>
         <v-card tile style="width:100%" color="transparent" raised>
-          <v-slider v-model="trackPlaying.playingPer" step="0" color="red" style="padding-left:15px;padding-top:0px;margin-top:0px;height:13px"></v-slider>
+          <v-slider :max="max" @click="seek(trackPlaying.playingPer)" v-model="trackPlaying.playingPer" step="0" color="red" style="padding-left:15px;padding-top:0px;margin-top:0px;height:13px"></v-slider>
           <v-list>
             <v-list-tile>
               <v-btn icon @click="trackPlaying.favorite = !trackPlaying.favorite">
@@ -41,6 +41,7 @@
 export default {
   data(){
     return {
+      max:0,
       videoId: '',
       mute: false,
       playerVars: {
@@ -64,10 +65,16 @@ export default {
       this.videoId = id
       this.trackPlaying.title = title
       this.trackPlaying.author = author
+      
     })
+    setInterval(()=> {
+                    this.trackPlaying.playingPer = this.player.getCurrentTime()
+                }, 1000);
   },
+  
   methods: {
     // Events Occurred
+    
     ready: function(player){
       this.player = player
       console.log('Music Player ready')
@@ -83,7 +90,10 @@ export default {
       console.log('Music Player playing')
       this.trackPlaying.running = true
       this.trackPlaying.buffer = false
-      progrupdate()
+      this.max = this.player.getDuration()
+      console.log(this.player.getDuration())
+      this.progrupdate()
+
     },
     paused: function(player){
       console.log('Music Player paused')
@@ -115,8 +125,10 @@ export default {
       this.player.stopVideo()
     },
     progrupdate: function(){
-      this.trackPlaying.playingPer = (this.player.getCurrentTime()/this.player.getDuration())*100
       console.log(this.trackPlaying.playingPer)
+    },
+    seek: function(location){
+      this.player.seekTo(location)
     }
   }
 }
