@@ -67,7 +67,9 @@ export default {
       this.trackPlaying.author = author
     })
     setInterval(()=> {
-      this.trackPlaying.playingPer = this.player.getCurrentTime()
+      if(this.trackPlaying.running){
+        this.trackPlaying.playingPer = this.player.getCurrentTime()
+      }
     }, 1000);
   },
   
