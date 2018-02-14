@@ -22,8 +22,6 @@
            </v-form>
           </v-flex>
       </v-layout>
-  
-          
             <v-layout row wrap>
               <v-flex pa-1 xs12 sm6 md4 lg4 v-for="item in resultArray" :key="item.id">
                 <v-card tile hover gery--darken-1>
@@ -36,10 +34,10 @@
                       </div>
                     </v-card-title>
                     <v-card-actions>
-                      <v-btn small outline round color="blue" @click.native="sendvid(item.id,item.title,item.author)"><v-icon>add_box</v-icon>Play</v-btn>
-                      <v-btn small outline round flat color="cyan"><v-icon>bookmark</v-icon>Save for Later</v-btn>
+                      <v-btn small dark color="red" @click.native="sendvid(item.id,item.title,item.author)"><v-icon>play_arrow</v-icon>Play</v-btn>
+                      <v-btn small color="cyan" disabled><v-icon>bookmark</v-icon>Save for Later</v-btn>
                       <v-spacer></v-spacer>
-                      <v-btn icon color="blue" @click.native="item.showDes = !item.showDes">
+                      <v-btn small icon dark color="blue" @click.native="item.showDes = !item.showDes">
                         <v-icon>{{ item.showDes ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
                       </v-btn>
                     </v-card-actions>
@@ -74,7 +72,7 @@
       },
       searchNadd (keyword) {
         this.resultArray=[]
-        axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&regionCode=eg&type=video&key=AIzaSyAbWy9rzBUnNsuu8XU_avOLck3h0a7AcZE&q='${keyword}`).
+        axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=30&regionCode=eg&type=video&key=AIzaSyAbWy9rzBUnNsuu8XU_avOLck3h0a7AcZE&q='${keyword}`).
         then( (response) => {
           console.log(response)
           let arr = []

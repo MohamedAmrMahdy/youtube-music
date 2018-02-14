@@ -1,5 +1,5 @@
 <template>
-      <v-footer fixed color=transparent>
+      <v-footer fixed color=transparent dark>
         <youtube 
         :video-id="videoId" :player-width=0.01 :player-height=0.01 :player-vars="playerVars" :mute="mute"
         @ready="ready" @ended="ended" @playing="playing" @paused="paused" @buffering="buffering" @qued="qued"
@@ -18,19 +18,17 @@
                 <v-list-tile-sub-title>{{trackPlaying.author}}</v-list-tile-sub-title>
               </v-list-tile-content>
               <v-spacer></v-spacer>
-              <v-list-tile-action v-if="trackPlaying.buffer">
-                <v-progress-circular indeterminate :width="3" color="red"></v-progress-circular>
-              </v-list-tile-action>
-              <v-list-tile-action :class="{
-                'mx-5': $vuetify.breakpoint.mdAndUp
-              }">
-              <v-btn icon @click.native="pause" v-if="trackPlaying.running">
-                  <v-icon>pause</v-icon>
-                </v-btn>
-                <v-btn icon @click.native="play" v-else>
-                  <v-icon>play_arrow</v-icon>
-                </v-btn>
-              </v-list-tile-action>
+                <v-list-tile-action v-if="trackPlaying.buffer">
+                  <v-progress-circular indeterminate :width="7" color="white"></v-progress-circular>
+                </v-list-tile-action>
+                <v-list-tile-action :class="{'mx-5': $vuetify.breakpoint.mdAndUp}">
+                <v-btn icon @click.native="pause" v-if="trackPlaying.running">
+                    <v-icon>pause</v-icon>
+                  </v-btn>
+                  <v-btn icon @click.native="play" v-else>
+                    <v-icon>play_arrow</v-icon>
+                  </v-btn>
+                </v-list-tile-action>
             </v-list-tile>
           </v-list>
         </v-card>
