@@ -61,10 +61,6 @@
         <v-toolbar-side-icon 
         @click.native.stop="sideNav = !sideNav"
         class=""></v-toolbar-side-icon>
-        
-          
-          <!--<router-link to="/" tag="span" style="cursor: pointer"> Youtube Music </router-link>-->
-        </v-toolbar-title>
         <v-spacer></v-spacer>
         <router-link to="/" tag="span" style="cursor: pointer">
             <v-btn flat small icon dark><v-icon>home</v-icon></v-btn>
@@ -100,9 +96,6 @@
           {icon: 'star_half', des: 'Please Rate us to keep updating', title: 'Rate our App', link: '/#'},
           {icon: 'mood', des: 'Check For The Magic', title: 'Credits', link: '/credits'},
           {icon: 'email', des: 'Send us Your Ideas', title: 'Send Feedback', link: '/feedback'}
-        ],
-        trackPlaying: [
-          {title:'AlanWalker - Faded ( 3am ba5a Remix )',author:'ALanVeVo',playingPer:40,duration:200,playing:false,favorite:false}
         ]
       }
     },
@@ -119,47 +112,6 @@
 
     },
   }
-  
-      // 2. This code loads the IFrame Player API code asynchronously.
-      var tag = document.createElement('script');
-
-      tag.src = "https://www.youtube.com/iframe_api";
-      var firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-      // 3. This function creates an <iframe> (and YouTube player)
-      //    after the API code downloads.
-      var player;
-      function onYouTubeIframeAPIReady() {
-        player = new YT.Player('player', {
-          height: '390',
-          width: '640',
-          videoId: 'M7lc1UVf-VE',
-          events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
-          }
-        });
-      }
-
-      // 4. The API will call this function when the video player is ready.
-      function onPlayerReady(event) {
-        event.target.playVideo();
-      }
-
-      // 5. The API calls this function when the player's state changes.
-      //    The function indicates that when playing a video (state=1),
-      //    the player should play for six seconds and then stop.
-      var done = false;
-      function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.PLAYING && !done) {
-          setTimeout(stopVideo, 6000);
-          done = true;
-        }
-      }
-      function stopVideo() {
-        player.stopVideo();
-      }
 </script>
 <style>
   @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons');
