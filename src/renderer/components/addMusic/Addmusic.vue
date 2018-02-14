@@ -25,18 +25,18 @@
   
           
             <v-layout row wrap>
-              <v-flex pa-1 xs12 sm6 md4 lg4 v-for="item in resultArray" :key="item.title">
+              <v-flex pa-1 xs12 sm6 md4 lg4 v-for="item in resultArray" :key="item.id">
                 <v-card tile hover gery--darken-1>
                     <v-card-media :src="item.picture" width="100%" height="200">
                     </v-card-media>
                     <v-card-title primary-title>
                       <div>
-                        <div class="headline">{{item.title}}</div>
+                        <div class="headline"><v-icon color="red" v-if="item.live">fiber_manual_record</v-icon>{{item.title}}</div>
                         <span class="grey--text">{{item.author}}</span>
                       </div>
                     </v-card-title>
                     <v-card-actions>
-                      <v-btn small outline round color="blue"><v-icon>add_box</v-icon>Play</v-btn>
+                      <v-btn small outline round color="blue" @click.native="sendvid(item.id,item.title,item.author)"><v-icon>add_box</v-icon>Play</v-btn>
                       <v-btn small outline round flat color="cyan"><v-icon>bookmark</v-icon>Save for Later</v-btn>
                       <v-spacer></v-spacer>
                       <v-btn icon color="blue" @click.native="item.showDes = !item.showDes">
@@ -59,7 +59,6 @@
 <script>
   var request = require('request')
   import axios from 'axios'
-
   export default{
     data () {
       return {
@@ -70,9 +69,12 @@
       }
     },
     methods: {
+      sendvid (id,title,author){
+        this.$eventHub.$emit('playvid',id,title,author)
+      },
       searchNadd (keyword) {
         this.resultArray=[]
-        axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&regionCode=eg&key=AIzaSyAbWy9rzBUnNsuu8XU_avOLck3h0a7AcZE&q='${keyword}`).
+        axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&regionCode=eg&type=video&key=AIzaSyAbWy9rzBUnNsuu8XU_avOLck3h0a7AcZE&q='${keyword}`).
         then( (response) => {
           console.log(response)
           let arr = []
@@ -82,9 +84,10 @@
                 title: item.snippet.title,
                 author: item.snippet.channelTitle,
                 picture: item.snippet.thumbnails.high.url,
-                link: item.snippet.videoId,
+                id: item.id.videoId,
                 description: item.snippet.description,
-                showDes: false
+                showDes: false,
+                live: (item.snippet.liveBroadcastContent==="live"?true:false)
             })
           }
           

@@ -1,36 +1,34 @@
 <template>
       <v-footer fixed color=transparent>
+        <youtube 
+        :video-id="videoId" :player-width=0.01 :player-height=0.01 :player-vars="playerVars" :mute="mute"
+        @ready="ready" @ended="ended" @playing="playing" @paused="paused" @buffering="buffering" @qued="qued"
+        style="display:block"
+        ></youtube>
         <v-card tile style="width:100%" color="transparent" raised>
-          <v-slider v-model="trackPlaying[0].playingPer" step="0" color="red" style="padding-left:15px;padding-top:0px;margin-top:0px;height:13px"></v-slider>
+          <v-slider v-model="trackPlaying.playingPer" step="0" color="red" style="padding-left:15px;padding-top:0px;margin-top:0px;height:13px"></v-slider>
           <v-list>
             <v-list-tile>
-              <youtube :video-id="videoId" :player-vars="playerVars" ref="youtube" @playing="playing" style="display:none"></youtube>
-              <v-btn icon @click="trackPlaying[0].favorite = !trackPlaying[0].favorite">
-                  <v-icon v-if="trackPlaying[0].favorite" large color="red">bookmark</v-icon>
+              <v-btn icon @click="trackPlaying.favorite = !trackPlaying.favorite">
+                  <v-icon v-if="trackPlaying.favorite" large color="red">bookmark</v-icon>
                   <v-icon v-else large>bookmark</v-icon>
                 </v-btn>
               <v-list-tile-content>
-                <v-list-tile-title> Playing : {{trackPlaying[0].title}}</v-list-tile-title>
-                <v-list-tile-sub-title>AlanVEO</v-list-tile-sub-title>
+                <v-list-tile-title> Playing : {{trackPlaying.title}}</v-list-tile-title>
+                <v-list-tile-sub-title>{{trackPlaying.author}}</v-list-tile-sub-title>
               </v-list-tile-content>
               <v-spacer></v-spacer>
-              <v-list-tile-action>
-                <v-btn icon>
-                  <v-icon>fast_rewind</v-icon>
-                </v-btn>
+              <v-list-tile-action v-if="trackPlaying.buffer">
+                <v-progress-circular indeterminate :width="3" color="red"></v-progress-circular>
               </v-list-tile-action>
               <v-list-tile-action :class="{
                 'mx-5': $vuetify.breakpoint.mdAndUp
               }">
-                <v-btn icon @click.native="playVideo">
-                  <v-icon >play_arrow</v-icon>
+              <v-btn icon @click.native="pause" v-if="trackPlaying.running">
+                  <v-icon>pause</v-icon>
                 </v-btn>
-              </v-list-tile-action>
-              <v-list-tile-action :class="{
-                'mr-3': $vuetify.breakpoint.mdAndUp
-              }">
-                <v-btn icon>
-                  <v-icon>fast_forward</v-icon>
+                <v-btn icon @click.native="play" v-else>
+                  <v-icon>play_arrow</v-icon>
                 </v-btn>
               </v-list-tile-action>
             </v-list-tile>
@@ -39,31 +37,86 @@
       </v-footer>
 </template>
 <script>
+
 export default {
   data(){
     return {
-      videoId: 'bTqVqk7FSmY',
+      videoId: '',
+      mute: false,
       playerVars: {
-        autoplay: 0,
-        controls : 0
+        autoplay: 1,
+        controls: 0,
+        showinfo: 0
       },
-      trackPlaying: [
-        {title:'AlanWalker - Faded ( 3am ba5a Remix )',author:'ALanVeVo',playingPer:40,duration:200,playing:false,favorite:false}
-      ]
+      trackPlaying: {
+        title:'',
+        author:'',
+        playingPer:0,
+        running:false,
+        favorite:false,
+        mute:false,
+        buffer:false
+      }
     }
   },
+  created(){
+    this.$eventHub.$on('playvid', (id,title,author) =>{
+      this.videoId = id
+      this.trackPlaying.title = title
+      this.trackPlaying.author = author
+    })
+  },
   methods: {
-    playVideo(){
+    // Events Occurred
+    ready: function(player){
+      this.player = player
+      console.log('Music Player ready')
+      this.trackPlaying.running = false
+      this.trackPlaying.buffer = false 
+    },
+    ended: function(player){
+      console.log('Music Player ended')
+      this.trackPlaying.running = false
+      this.trackPlaying.buffer = false
+    },
+    playing: function(player){
+      console.log('Music Player playing')
+      this.trackPlaying.running = true
+      this.trackPlaying.buffer = false
+      progrupdate()
+    },
+    paused: function(player){
+      console.log('Music Player paused')
+      this.trackPlaying.running = false
+      this.trackPlaying.buffer = false
+    },
+    buffering: function(player){
+      console.log('Music Player Buffering')
+      this.trackPlaying.running = false
+      this.trackPlaying.buffer = true
+    },
+    qued: function(player){
+      console.log('Music Player qued')
+      this.trackPlaying.running = false
+      this.trackPlaying.buffer = false
+    },
+    //controls
+    toogleMute: function() {
+      this.mute = !this.mute
+    },
+    play: function() {
       this.player.playVideo()
     },
-    playing(){
-      console.log('\o/ we are playing!!')
+    pause: function(vidid){
+      this.player.pauseVideo()
+      this.trackPlaying.running = !this.trackPlaying.running
     },
-    
-  },
-  computed: {
-    player () {
-      return this.$refs.youtube.player
+    stop: function(vidid){
+      this.player.stopVideo()
+    },
+    progrupdate: function(){
+      this.trackPlaying.playingPer = (this.player.getCurrentTime()/this.player.getDuration())*100
+      console.log(this.trackPlaying.playingPer)
     }
   }
 }

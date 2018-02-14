@@ -6,8 +6,10 @@ import App from './App'
 import router from './router'
 import { store } from './store'
 import player from './player'
-import VueYoutube from 'vue-youtube'
-Vue.use(VueYoutube)
+import VueYoutubeEmbed from 'vue-youtube-embed'
+
+Vue.use(VueYoutubeEmbed)
+
 Vue.component('player', player)
 Vue.use(Vuetify, {
   theme: {
@@ -22,6 +24,7 @@ Vue.use(Vuetify, {
 })
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.config.productionTip = false
+Vue.prototype.$eventHub = new Vue()
 
 /* eslint-disable no-new */
 new Vue({

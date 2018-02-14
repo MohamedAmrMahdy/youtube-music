@@ -67,10 +67,7 @@
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <router-link to="/" tag="span" style="cursor: pointer">
-          <v-badge overlay color="blue" overlap>
-            <span slot="badge">{{queueItems.length}}</span>
-            <v-btn flat small icon dark><v-icon>format_list_numbered</v-icon></v-btn>
-          </v-badge>
+            <v-btn flat small icon dark><v-icon>home</v-icon></v-btn>
         </router-link>
       </v-toolbar>
       <main>
@@ -103,18 +100,6 @@
           {icon: 'star_half', des: 'Please Rate us to keep updating', title: 'Rate our App', link: '/#'},
           {icon: 'mood', des: 'Check For The Magic', title: 'Credits', link: '/credits'},
           {icon: 'email', des: 'Send us Your Ideas', title: 'Send Feedback', link: '/feedback'}
-        ],// we will remove this queue items and connect queueItems.length with store>queue_list
-        queueItems: [
-          {index: '1', title: 'test', author: 'Mohamed', picture: '', link: '', description: 'bla bla bla bla'},
-          {index: '2', title: 'test2', author: 'Mohamed', picture: '', link: '', description: 'bla bla bla bla'},
-          {index: '3', title: 'test3', author: 'Mohamed', picture: '', link: '', description: 'bla bla bla bla'},
-          {index: '4', title: 'test4', author: 'Mohamed', picture: '', link: '', description: 'bla bla bla bla'},
-          {index: '5', title: 'test5', author: 'Mohamed', picture: '', link: '', description: 'bla bla bla bla'},
-          {index: '6', title: 'test6', author: 'Mohamed', picture: '', link: '', description: 'bla bla bla bla'},
-          {index: '7', title: 'test7', author: 'Mohamed', picture: '', link: '', description: 'bla bla bla bla'},
-          {index: '8', title: 'test8', author: 'Mohamed', picture: '', link: '', description: 'bla bla bla bla'},
-          {index: '9', title: 'test9', author: 'Mohamed', picture: '', link: '', description: 'bla bla bla bla'},
-          {index: '10', title: 'test10', author: 'Mohamed', picture: '', link: '', description: 'bla bla bla bla'}
         ],
         trackPlaying: [
           {title:'AlanWalker - Faded ( 3am ba5a Remix )',author:'ALanVeVo',playingPer:40,duration:200,playing:false,favorite:false}
