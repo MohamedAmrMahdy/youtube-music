@@ -36,7 +36,7 @@
                       </div>
                     </v-card-title>
                     <v-card-actions>
-                      <v-btn small outline round color="blue" @click.native="sendvid(item.id,item.title,item.author,item)"><v-icon>add_box</v-icon>Play</v-btn>
+                      <v-btn small outline round color="blue" @click.native="sendvid(item.id,item.title,item.author)"><v-icon>add_box</v-icon>Play</v-btn>
                       <v-btn small outline round flat color="cyan"><v-icon>bookmark</v-icon>Save for Later</v-btn>
                       <v-spacer></v-spacer>
                       <v-btn icon color="blue" @click.native="item.showDes = !item.showDes">
@@ -69,9 +69,8 @@
       }
     },
     methods: {
-      sendvid (id,title,author,item){
+      sendvid (id,title,author){
         this.$eventHub.$emit('playvid',id,title,author)
-        console.log(item)
       },
       searchNadd (keyword) {
         this.resultArray=[]
@@ -90,31 +89,12 @@
                 showDes: false,
                 live: (item.snippet.liveBroadcastContent==="live"?true:false)
             })
-          }
-          
-          }
-        )
-        // request('https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&regionCode=eg&key=AIzaSyAbWy9rzBUnNsuu8XU_avOLck3h0a7AcZE&q=' +keyword, (error, response, body) =>{
-        //   var json = JSON.parse(body)
-        //   if (error) {
-        //     throw error
-        //   } else {
-        //     for (let item in json.items) {
-        //       this.resultArray.push({
-        //         title: json.items[item].snippet.title,
-        //         author: json.items[item].snippet.channelTitle,
-        //         picture: json.items[item].snippet.thumbnail.medium,
-        //         link: json.items[item].videoId,
-        //         description: json.items[item].snippet.description,
-        //         showDes: false
-        //       })
-        //     }
-        //   }
-        // })
+          } 
+        })
       },
       clear(){
         this.input = ''
       }
     }
-  }
+}
 </script>

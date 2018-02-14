@@ -65,16 +65,14 @@ export default {
       this.videoId = id
       this.trackPlaying.title = title
       this.trackPlaying.author = author
-      
     })
     setInterval(()=> {
-                    this.trackPlaying.playingPer = this.player.getCurrentTime()
-                }, 1000);
+      this.trackPlaying.playingPer = this.player.getCurrentTime()
+    }, 1000);
   },
   
   methods: {
     // Events Occurred
-    
     ready: function(player){
       this.player = player
       console.log('Music Player ready')
