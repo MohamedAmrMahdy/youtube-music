@@ -1,6 +1,6 @@
 <template>
-  <div id="app" >
-    <v-app light >
+  <div id="app">
+    <v-app light>
       <v-navigation-drawer 
       fixed
       clipped
@@ -8,6 +8,20 @@
       v-model="sideNav"
       >
         <v-list two-line dense>
+          <v-divider></v-divider>
+          <v-divider></v-divider>
+          <v-list-tile 
+          router-link
+          :to="home" exact
+          >
+            <v-list-tile-action>
+              <v-icon>home</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Home</v-list-tile-title>
+              <v-list-tile-sub-title>Check What Is Trending</v-list-tile-sub-title>
+            </v-list-tile-content>
+          </v-list-tile>
           <v-divider></v-divider>
           <v-divider></v-divider>
           <v-subheader>Add Music To Queue</v-subheader>
@@ -43,35 +57,38 @@
             </v-list-tile-content>
           </v-list-tile>
           <v-divider></v-divider>
+          <v-subheader>Settings</v-subheader>
         </v-list>
       </v-navigation-drawer>
-              <br>
+      <br>
       <v-system-bar fixed light style="-webkit-user-select:none;-webkit-app-region:drag;hight:400px">
         <img src="../assets/logo.png" style="width: 30px;padding-top:1px;padding-right:8px">YouTube Music
         <v-spacer></v-spacer>
         <v-toolbar-items>
-        <v-btn small flat depressed left color="blue" @click="minimi()" style="-webkit-app-region: no-drag"><v-icon>remove</v-icon></v-btn>
-        <v-btn small flat depressed left color="blue" @click="tooglemax()" style="-webkit-app-region: no-drag"><v-icon>check_box_outline_blank</v-icon></v-btn>
-        <v-btn small left depressed primary @click="close()" style="-webkit-app-region: no-drag"><v-icon>close</v-icon></v-btn>
+          <v-btn small flat depressed left color="blue" @click="minimi()" style="-webkit-app-region: no-drag">
+            <v-icon>remove</v-icon>
+          </v-btn>
+          <v-btn small flat depressed left color="blue" @click="tooglemax()" style="-webkit-app-region: no-drag">
+            <v-icon>check_box_outline_blank</v-icon>
+          </v-btn>
+          <v-btn small left depressed color="red darken-1" dark @click="close()" style="-webkit-app-region: no-drag">
+            <v-icon>close</v-icon>
+          </v-btn>
         </v-toolbar-items>
       </v-system-bar>
       <v-toolbar
       color="primary"
       >
-        <v-toolbar-side-icon 
-        @click.native.stop="sideNav = !sideNav"
-        class=""></v-toolbar-side-icon>
+        <v-toolbar-side-icon dark @click.native.stop="sideNav = !sideNav" class=""><v-icon>reorder</v-icon></v-toolbar-side-icon>
         <v-spacer></v-spacer>
         <router-link to="/" tag="span" style="cursor: pointer">
-            <v-btn flat small icon dark><v-icon>home</v-icon></v-btn>
+            <v-btn flat small icon dark>
+              <v-icon>home</v-icon>
+            </v-btn>
         </router-link>
       </v-toolbar>
       <main>
-        <transition>
-        <keep-alive>
           <router-view></router-view>
-        </keep-alive>
-        </transition>
       </main>
       <player>
       </player>
@@ -81,21 +98,21 @@
 
 <script>
   import { ipcRenderer } from 'electron'
-  
   export default{
     data () {
       return {
+        home: '/',
         hiddenPlayer: false,
         sideNav: false, // we dont need to include it in store
         sideMenutopItems: [
           {icon: 'add', des: 'Search For Video', title: 'Music', link: '/addmusic'},
-          {icon: 'playlist_add', des: 'Search for Playlist', title: 'Playlist', link: '/addplaylist'},
+          {icon: 'playlist_add', des: 'Search For Playlist', title: 'Playlist', link: '/addplaylist'},
         ],
         sideMenuItems: [
           {icon: 'queue_music', des: 'Check Your Music Queue', title: 'Queue', link: '/queue'},
-          {icon: 'star_half', des: 'Please Rate us to keep updating', title: 'Rate our App', link: '/#'},
+          {icon: 'star_half', des: 'Please Rate Us To Keep Updating', title: 'Rate our App', link: '/#'},
           {icon: 'mood', des: 'Check For The Magic', title: 'Credits', link: '/credits'},
-          {icon: 'email', des: 'Send us Your Ideas', title: 'Send Feedback', link: '/feedback'}
+          {icon: 'email', des: 'Send Us Your Ideas', title: 'Send Feedback', link: '/feedback'}
         ]
       }
     },
@@ -109,8 +126,7 @@
       minimi: () => {
         ipcRenderer.send('mini-win')
       }
-
-    },
+    }
   }
 </script>
 <style>
