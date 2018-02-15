@@ -28,17 +28,15 @@
       <v-flex pa-1 xs12 sm6 md4 lg4 v-for="item in resultArray" :key="item.id">
         <v-card tile hover gery--darken-1>
           <v-card-media :src="item.picture" width="100%" height="200">
-            <v-btn right small dark color="greay lighten-2"> {{item.duration}} </v-btn>
+            <v-btn right small dark color="greay lighten-2" v-if="item.live">🔴 Live</v-btn>
+            <v-btn right small dark color="greay lighten-2" v-else > {{item.duration}} </v-btn>
           </v-card-media>
           <v-card-title primary-title>
             <div>
               <div class="headline">
-                <v-icon color="red" v-if="item.live">fiber_manual_record</v-icon>
                 {{item.title}}
               </div>
               <span class="grey--text">{{item.author}}</span>
-              <br>
-              <span class="grey--text">01:98</span>
             </div>
           </v-card-title>
           <v-card-actions>

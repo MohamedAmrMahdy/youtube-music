@@ -26,7 +26,7 @@
             <v-icon v-else large>bookmark</v-icon>
           </v-btn>
           <v-list-tile-content>
-            <v-list-tile-title> Playing : {{trackPlaying.title}}</v-list-tile-title>
+            <v-list-tile-title> {{status}} {{trackPlaying.title}}</v-list-tile-title>
             <v-list-tile-sub-title>{{trackPlaying.author}}</v-list-tile-sub-title>
           </v-list-tile-content>
           <v-spacer></v-spacer>
@@ -51,7 +51,8 @@
 export default {
   data(){
     return {
-      max:0,
+      status: '🙏 Waiting for a Music to Play',
+      max: 0,
       videoId: '',
       mute: false,
       playerVars: {
@@ -95,11 +96,13 @@ export default {
       console.log('Music Player ended')
       this.trackPlaying.running = false
       this.trackPlaying.buffer = false
+      this.status = '💁‍ Choose A Video to Play | Old :'
     },
     playing: function(player){
       console.log('Music Player playing')
       this.trackPlaying.running = true
       this.trackPlaying.buffer = false
+      this.status = '🎶 Playing :'
       this.max = this.player.getDuration()
       console.log(this.player.getDuration())
       this.progrupdate()
@@ -109,11 +112,13 @@ export default {
       console.log('Music Player paused')
       this.trackPlaying.running = false
       this.trackPlaying.buffer = false
+      this.status = '✋ Paused :'
     },
     buffering: function(player){
       console.log('Music Player Buffering')
       this.trackPlaying.running = false
       this.trackPlaying.buffer = true
+      this.status = '⚠️ Buffering :'
     },
     qued: function(player){
       console.log('Music Player qued')
