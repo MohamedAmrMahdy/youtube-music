@@ -28,6 +28,7 @@
       <v-flex pa-1 xs12 sm6 md4 lg4 v-for="item in resultArray" :key="item.id">
         <v-card tile hover gery--darken-1>
           <v-card-media :src="item.picture" width="100%" height="200">
+            <v-btn right small dark color="greay lighten-2"> 12:00 </v-btn>
           </v-card-media>
           <v-card-title primary-title>
             <div>
