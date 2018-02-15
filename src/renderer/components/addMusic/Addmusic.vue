@@ -120,12 +120,21 @@
           }
         });
 
-        let hours = (parseInt(match[0]) || 0);
-        let minutes = (parseInt(match[1]) || 0);
-        let seconds = (parseInt(match[2]) || 0);
-        if(hours) return `${hours}:${minutes}:${seconds}`
-        else if (minutes) return `${minutes}:${seconds}`
-        else if (seconds) return `${seconds}`
+        let hours = (parseInt(match[0]) || 0)
+        let minutes = (parseInt(match[1]) || 0)
+        let seconds = (parseInt(match[2]) || 0)
+        
+        if(hours==0) hours = `00`
+        if(minutes==0) minutes = `00`
+        if(seconds==0) seconds = `00`
+
+        if(hours>0 && hours <10) hours = `0${hours}`
+        if(minutes>0 && minutes <10) minutes = `0${minutes}`
+        if(seconds>0 && seconds <10) seconds = `0${seconds}`
+        
+        if(hours && hours!=`00`) {return `${hours}:${minutes}:${seconds}`}
+        else if (minutes && minutes!=`00`) {return `${minutes}:${seconds}`}
+        else if (seconds && seconds!=`00`){ return `0:${seconds}`}
         
 }
     }
