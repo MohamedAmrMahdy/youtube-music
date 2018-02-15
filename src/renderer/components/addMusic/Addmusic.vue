@@ -28,7 +28,7 @@
       <v-flex pa-1 xs12 sm6 md4 lg4 v-for="item in resultArray" :key="item.id">
         <v-card tile hover gery--darken-1>
           <v-card-media :src="item.picture" width="100%" height="200">
-            <v-btn right small dark color="greay lighten-2"> 12:00 </v-btn>
+            <v-btn right small dark color="greay lighten-2"> {{item.duration}} </v-btn>
           </v-card-media>
           <v-card-title primary-title>
             <div>
@@ -84,26 +84,50 @@
       },
       searchNadd (keyword) {
         this.resultArray=[]
-        axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=30&regionCode=eg&type=video&key=AIzaSyAbWy9rzBUnNsuu8XU_avOLck3h0a7AcZE&q='${keyword}`).
+        axios.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=30&regionCode=eg&type=video&key=AIzaSyAbWy9rzBUnNsuu8XU_avOLck3h0a7AcZE&q='${keyword}'`).
         then( (response) => {
           let arr = []
           for(let i = 0 ; i < response.data.items.length; i++){
-            let item = response.data.items[i] 
-            this.resultArray.push({
+             let item = response.data.items[i] 
+            axios.get(`https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${item.id.videoId}&key=AIzaSyAbWy9rzBUnNsuu8XU_avOLck3h0a7AcZE`).then((response)=>{
+              let formattedDuration = this.format(response.data.items[0].contentDetails['duration'])
+             
+              this.resultArray.push({
                 title: item.snippet.title,
                 author: item.snippet.channelTitle,
                 picture: item.snippet.thumbnails.high.url,
                 id: item.id.videoId,
+                duration: formattedDuration,
                 description: item.snippet.description,
                 showDes: false,
                 live: (item.snippet.liveBroadcastContent==="live"?true:false)
             })
+             })
+           
+            
           } 
         })
       },
       clear(){
         this.input = ''
-      }
+      },
+      format(duration) {
+        let match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+
+        match = match.slice(1).map((x)=> {
+          if (x != null) {
+              return x.replace(/\D/, '');
+          }
+        });
+
+        let hours = (parseInt(match[0]) || 0);
+        let minutes = (parseInt(match[1]) || 0);
+        let seconds = (parseInt(match[2]) || 0);
+        if(hours) return `${hours}:${minutes}:${seconds}`
+        else if (minutes) return `${minutes}:${seconds}`
+        else if (seconds) return `${seconds}`
+        
+}
     }
   }
 </script>
