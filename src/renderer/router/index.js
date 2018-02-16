@@ -6,6 +6,8 @@ import AddPlaylist from '@/components/addPlaylist/Addplaylist'
 import Credits from '@/components/Credits'
 import Feedback from '@/components/Feedback'
 import Queue from '@/components/Queue'
+import MainWin from '@/components/MainWin'
+import Loading from '@/components/Loading'
 
 Vue.use(Router)
 
@@ -13,33 +15,22 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home
+      name: 'loading',
+      component: Loading,
     },
     {
-      path: '/queue',
-      name: 'queue',
-      component: Queue
-    },
-    {
-      path: '/addmusic',
-      name: 'addmusic',
-      component: AddMusic
-    },
-    {
-      path: '/addplaylist',
-      name: 'addplaylist',
-      component: AddPlaylist
-    },
-    {
-      path: '/credits',
-      name: 'credits',
-      component: Credits
-    },
-    {
-      path: '/feedback',
-      name: 'feedback',
-      component: Feedback
+      path: '/mainWin/:id',
+      name: 'mainWin',
+      component: MainWin,
+      children: [
+        {path: 'home', component:Home},
+        {path: 'addmusic', component:AddMusic},
+        {path: 'addplaylist', component:AddPlaylist},
+        {path: 'credits', component:Credits},
+        {path: 'queue', component:Queue},
+        {path: 'feedback', component:Feedback}
+      ]
     }
-  ]
+  ],
+  mode: 'history'
 })
