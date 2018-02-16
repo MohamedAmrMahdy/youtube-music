@@ -1,6 +1,5 @@
 <template>
   <v-container fluid>
-    <navigation></navigation>
     <v-layout row>
       <v-flex xs12>
         <v-form v-model="valid" @submit.prevent="searchNadd(input)">
@@ -63,9 +62,7 @@
         <br>
       </v-flex>
     </v-layout>
-    
   </v-container>
-  
 </template>
 <script>
   var request = require('request')
