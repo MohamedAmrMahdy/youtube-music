@@ -5,7 +5,7 @@ import 'vuetify/dist/vuetify.css'
 import App from './App'
 import router from './router'
 import { store } from './store'
-import player from './components/player'
+import player from './player'
 import VueYoutubeEmbed from 'vue-youtube-embed'
 
 Vue.use(VueYoutubeEmbed)
