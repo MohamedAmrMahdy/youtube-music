@@ -41,6 +41,5 @@ export default new Router({
       name: 'feedback',
       component: Feedback
     }
-  ],
-  mood: 'history'
+  ]
 })
